@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="xs3p.xsl"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://beexml.org" targetNamespace="http://beexml.org" elementFormDefault="qualified">
+	<xsd:annotation>
+		<xsd:documentation>&#13;
+  beeXML schema version 1.0 - For more information on beeXML and this schema, visit http://beeXML.org&#13;
+&#13;
+  beeXML uses the following conventions: all coordinates are relative to the WGS84 datum.  All measurements are in metric units.&#13;
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="beeXML" type="beeXMLType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+		beeXML is the root element in the XML file.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="beeXMLType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+		beeXML documents contain a metadata header, followed by events or transactions.  You can add your own elements&#13;
+		to the extensions section of the beeXML document.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="metadata" type="metadataType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Metadata about the file.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="event" type="eventType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		A list of events such as observations, measurements or actions related to bee hives.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="transaction" type="transactionType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		A list of transactions related to bee products.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="extensions" type="extensionsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		You can add extend beeXML by adding your own elements from another schema here.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="xsd:string" use="required" fixed="1.0">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		You must include the version number in your beeXML document.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="creator" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		You must include the name or URL of the software that created your beeXML document.  This allows others to&#13;
+		inform the creator of a beeXML instance document that fails to validate.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="metadataType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+		Information about the beeXML file, author, and copyright restrictions goes in the metadata section.  Providing rich,&#13;
+		meaningful information about your beeXML files allows others to search for and use your beeXML data.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- elements must appear in this order -->
+			<xsd:element name="name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		The name of the beeXML file.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="desc" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		A description of the contents of the beeXML file.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="author" type="personType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		The person or organization who created the beeXML file.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="copyright" type="copyrightType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Copyright and license information governing use of the file.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="link" type="linkType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		URLs associated with the data described in the file.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="time" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		The creation date of the file. Date and time in are in Universal Coordinated Time (UTC), not local time! Conforms to ISO 8601 specification for date/time representation.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="keywords" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Keywords associated with the file.  Search engines or databases can use this information to classify the data.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bounds" type="boundsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Minimum and maximum coordinates which describe the extent of the geographic coordinates in the file.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="extensions" type="extensionsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		You can add extend beeXML by adding your own elements from another schema here.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Bee Related Events -->
+	<xsd:complexType name="eventType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+		event represents a observations, measurement or actions related to bee a bee hive.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- elements must appear in this order -->
+			<!-- Event info -->
+			<xsd:element name="time" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Creation/modification timestamp. Date and time in are in Universal Coordinated Time (UTC), not local time! Conforms to ISO 8601 specification for date/time representation. Fractional seconds are allowed for millisecond timing of automated hive monitoring. &#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="temperature" type="degreesType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Temperature (in degrees Celsius) at the location&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="weight" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Weight (in kilograms) of the hive as provided by a hive scale.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<!-- Description info -->
+			<xsd:element name="hiveID" type="xsd:string" minOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			The ID of the bee hive. beeXML does not place restrictions on the length of this field or the characters contained in it. It is up to the receiving application to validate the field.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="apiaryID" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			The ID of the apiary. beeXML does not place restrictions on the length of this field or the characters contained in it. It is up to the receiving application to validate the field.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="srcApiaryID" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			The ID of the source apiary in case the hive or contents of the hive (swarm/frames) were moved from another location.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="desc" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			A text description of the event. Holds additional information about the element intended to be human readable.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="src" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Source of data. Included to give user some idea of reliability and accuracy of data.  This can contain either information about the monitoring equiment or the individual involved in collecting the data.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="link" type="linkType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Link to additional information about the event.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sym" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Text of symbol name. For interchange with other programs, use the exact spelling of the symbol used to represent this event.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="type" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Type (classification) of the event.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="object" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Object of the event. The events are observations or actions taken on objects such as the entire hive or contents of the hive such as frames or queens. Formulation or concentration of feed or medicine belongs in the description. &#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="count" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Count of objects of the event. For example the numner of frames added or removed. Allways a positive number.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="unit" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Units used in the event. For example kilogram sugar syrup added or milliliter used in formic acid treatment. All units are metric and not abreviated milliliter, grams etc.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<!-- Accuracy info -->
+			<xsd:element name="timePrecision" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Precision of the time data plus-minus in seconds.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="geoPrecision" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Precision of the georaphic data plus-minus in centimeters.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ele" type="xsd:decimal" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Elevation (in meters) of the point of the event. This information can some from a GPS device or the apiary database.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="extensions" type="extensionsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		You can add extend beeXML by adding your own elements from another schema here.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cmt" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Comment containing additional information about the event. &#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="lat" type="latitudeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		The latitude of the point.  This is always in decimal degrees, and always in WGS84 datum.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="lon" type="longitudeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+      The longitude of the point.  This is always in decimal degrees, and always in WGS84 datum.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- Bee Product Related Transactions -->
+	<xsd:complexType name="transactionType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+		Represents a transaction with bee products such as honey extraction, packaging or sales.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Name of the transaction.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cmt" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Comment about the transaction.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="desc" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Text description of transaction for user. Not intended for machine processing.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="src" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Source of data. Included to give user some idea of reliability and accuracy of data.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="link" type="linkType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Links to external information about the transaction.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="number" type="xsd:nonNegativeInteger" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Transaction number.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="type" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+			Type (classification) of transaction.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="extensions" type="extensionsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		You can add extend beeXML by adding your own elements from another schema here.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="extensionsType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+	 You can add extend beeXML by adding your own elements from another schema here.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		 You can add extend beeXML by adding your own elements from another schema here.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:any>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="copyrightType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+	 Information about the copyright holder and any license governing use of this file.  By linking to an appropriate license,&#13;
+	 you may place your data into the public domain or grant additional usage rights.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- elements must appear in this order -->
+			<xsd:element name="year" type="xsd:gYear" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Year of copyright.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="license" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Link to external file containing license text.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="author" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		Copyright holder (TopoSoft, Inc.)&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="linkType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+	 A link to an external resource (Web page, digital photo, video clip, etc) with additional information.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- elements must appear in this order -->
+			<xsd:element name="text" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Text of hyperlink.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="type" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Mime type of content (image/jpeg)&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="href" type="xsd:anyURI" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		URL of hyperlink.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="emailType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+	 An email address.  Broken into two parts (id and domain) to help prevent email harvesting.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="id" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		id half of email address (joe)&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="domain" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		domain half of email address (mycooldomain.com)&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="personType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+	 A person or organization.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!-- elements must appear in this order -->
+			<xsd:element name="name" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Name of person or organization.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="email" type="emailType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Email address.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="link" type="linkType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>&#13;
+		Link to Web site or other external information about person.&#13;
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="boundsType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+	 Two lat/lon pairs defining the extent of an element.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="minlat" type="latitudeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		The minimum latitude.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="minlon" type="longitudeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		The minimum longitude.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxlat" type="latitudeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		The maximum latitude.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="maxlon" type="longitudeType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>&#13;
+		The maximum longitude.&#13;
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:simpleType name="latitudeType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+		The latitude of the point.  Decimal degrees, WGS84 datum.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="-90.0"/>
+			<xsd:maxInclusive value="90.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="longitudeType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+		The longitude of the point.  Decimal degrees, WGS84 datum.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="-180.0"/>
+			<xsd:maxExclusive value="180.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="degreesType">
+		<xsd:annotation>
+			<xsd:documentation>&#13;
+		Units are decimal degrees celsius.&#13;
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="-60.0"/>
+			<xsd:maxExclusive value="+60.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
